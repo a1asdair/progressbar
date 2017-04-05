@@ -51,6 +51,7 @@
 {pstd}
 {cmd:progressbar} displays a progress bar for use in loops or repeated tasks.  It is able to track the progress of nested loops incorporating both foreach and forvalues loops.  It can also be used outside of loops where the number of tasks is known.
 
+{pstd}
 {cmd:progressbar} should be called once before the repeated tasks begin to set up the tracking.  It can then be called each time the progress bar needs to be updated and displayed.  Options allow the display of the progress bar to be customised, and it can also estimate the time to completion.
 
 
@@ -83,7 +84,7 @@ If they are all 1, then this option can be omitted, otheriwse it must be specifi
 e.g. 2 1 1
 
 {phang}
-{opt list#()} Include the list for each of the foreach loops in turn, where # should be 1 for the first list, 2 for teh second list, etc.  progressbar supports up to 10 nested foreach loops.
+{opt list#()} Include the list for each of the foreach loops in turn, where # should be 1 for the first list, 2 for the second list, etc.  progressbar supports up to 10 nested foreach loops.
 
 {phang}
 {opt time()}
@@ -114,6 +115,50 @@ For detailed information on the whatever statistic, see {bf:[R] intro}.
 {marker examples}{...}
 {title:Examples}
 
-{phang}{cmd:. whatever mpg weight}{p_end}
+{pstd}
+Initialise a simple loop from 1 to 10
 
-{phang}{cmd:. whatever mpg weight, meanonly}{p_end}
+{phang}{cmd:. progressbar , init type(v) start(1) end(10) step(1)}{p_end}
+
+{pstd}
+Initialise a simple loop from 1 to 10 including a timer
+
+{phang}{cmd:. progressbar , init type(v) start(1) end(10) time}{p_end}
+
+{pstd}
+Initialise a complicated loop involving two forvalues and two foreach loops of different sizes
+
+{phang}{cmd:. progressbar , init type(v e v e) start(1 5) end(10 25) step(1 5) list1(abc def ghi) list2(a b c d)}{p_end}
+
+{p 4 6 2}
+
+{pstd}
+Display a progress bar during a loop
+
+{phang}{cmd:. progressbar , }{p_end}
+
+{pstd}
+Display a progress bar during a loop with a timer
+
+{phang}{cmd:. progressbar , time }{p_end}
+
+{pstd}
+Display a progress bar that is 100 characters wide
+
+{phang}{cmd:. progressbar , wide(100)}{p_end}
+
+{p 4 6 2}
+
+{pstd}
+A full example of using progressbar with a forvalues loop.
+
+{phang}{cmd:. progressbar , init type(v) start(1) end(20) time}{p_end}
+
+	{cmd:. forvalues i = 1(1)100 {c -(}}
+	  {cmd:. progressbar , time}
+	  {cmd:2.       generate x`i' = runiform()}
+	  {cmd:3. {c )-}}
+
+
+
+
