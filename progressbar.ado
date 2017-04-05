@@ -227,10 +227,21 @@ syntax , [init] [start(string)] [end(string)] [step(string)] [type(string)] [lis
 				local elapsedtime = (clock("$S_TIME", "hms") - $progressbarstarttime)/60000
 				// local remainingtime = round((`elapsedtime'/`percent') - `elapsedtime',.01)
 				local remainingtime = (`elapsedtime'/`percent') - `elapsedtime'
-				
-				if `elapsedtime'>1 {
+	
+
+				if `elapsedtime'>1 & `elapsedtime'<=60 {
 					local elapsedtime = round(`elapsedtime',0.1)
 					local units1 = "mins"
+				}
+				
+				if `elapsedtime'>60 & `elapsedtime'<=1440 {
+					local elapsedtime = round(`elapsedtime'/60,0.1)
+					local units1 = "hours"
+				}
+				
+				if `elapsedtime'>1440 {
+					local elapsedtime = round(`elapsedtime'/1440,0.1)
+					local units1 = "days"
 				}
 				
 				if `elapsedtime'<=1 {
@@ -238,10 +249,20 @@ syntax , [init] [start(string)] [end(string)] [step(string)] [type(string)] [lis
 					local units1 = " secs"
 				}		
 				
-				if `remainingtime'>1 {
+				if `remainingtime'>1 & `remainingtime'<=60 {
 					local remainingtime = round(`remainingtime',0.1)
 					local units2 = "mins."
 				}
+				
+				if `remainingtime'>60 & `remainingtime'<=1440 {
+					local remainingtime = round(`remainingtime'/60,0.1)
+					local units2 = "hours."
+				}
+				
+				if `remainingtime'>1440 {
+					local remainingtime = round(`remainingtime'/1440,0.1)
+					local units2 = "days."
+				}	
 				
 				if `remainingtime'<=1 {
 					local remainingtime = round(`remainingtime'*60,1)
