@@ -84,7 +84,16 @@ syntax , [init] [start(string)] [end(string)] [step(string)] [type(string)] [lis
 
 	if "`init'"=="init" {
 
+		// Set up defaults of options are omitted
 
+		if "`type'"=="" {
+			local type = "v"
+		}
+		
+		if "`start'"=="" {
+			local start = "1"
+		}
+	
 		local nestnum = wordcount("`type'",1)
 
 		di "`nestnum'"
@@ -270,7 +279,7 @@ syntax , [init] [start(string)] [end(string)] [step(string)] [type(string)] [lis
 				}
 							
 				
-				di "Time elapsed " "`elapsedtime'" " `units1'" ", estimated time remaining " "`remainingtime'" " `units2'"
+				di "Time elapsed " %8.1fc `elapsedtime' " `units1'" ", estimated time remaining " %8.1fc `remainingtime' " `units2'"
 			}
 
 
