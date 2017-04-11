@@ -99,7 +99,7 @@ Allows the user to specify the width of the bar displayed in characters.  The pr
 {opt loud} This option prevents the -progressbar- from clearing the screen, allowing the output to be preserved.
 
 {phang}
-{opt loud} This option displays the progress bar without incrementing the counter.
+{opt display} This option displays the progress bar without incrementing the counter.
 
 {phang}
 {opt time} This option needs to be specified in both the initiation and looping commands for it to work. It estimates the remaining time for the loop, assuming constant runtimes.
