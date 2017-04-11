@@ -109,7 +109,7 @@ Allows the user to specify the width of the bar displayed in characters.  The pr
 {title:Remarks}
 
 {pstd}
-For detailed information on the whatever statistic, see {bf:[R] intro}.
+While {cmd:progressbar} will add slightly to runtime, it is helpful to be able to estimate when an intensive loop will finish.
 
 
 {marker examples}{...}
@@ -152,12 +152,12 @@ Display a progress bar that is 100 characters wide
 {pstd}
 A full example of using progressbar with a forvalues loop.
 
-{phang}{cmd:. progressbar , init type(v) start(1) end(20) time}{p_end}
+{phang}{cmd:. progressbar , init type(v) start(1) end(100) time}{p_end}
 
 	{cmd:. forvalues i = 1(1)100 {c -(}}
-	  {cmd:. progressbar , time}
-	  {cmd:2.       generate x`i' = runiform()}
-	  {cmd:3. {c )-}}
+	   {cmd:. progressbar , time}
+	  {cmd:2. generate x`i' = runiform()}
+   {cmd:3. {c )-}}
 
 
 
