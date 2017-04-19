@@ -52,7 +52,7 @@
 {cmd:progressbar} displays a progress bar for use in loops or repeated tasks.  It is able to track the progress of nested loops incorporating both foreach and forvalues loops.  It can also be used outside of loops where the number of tasks is known.
 
 {pstd}
-{cmd:progressbar} should be called once before the repeated tasks begin to set up the tracking.  It can then be called each time the progress bar needs to be updated and displayed.  Options allow the display of the progress bar to be customised, and it can also estimate the time to completion.
+{cmd:progressbar} should be called once before the repeated tasks begin to set up the tracking using the init option.  It can then be called each time the progress bar needs to be updated and displayed.  Options allow the display of the progress bar to be customised, and it can also estimate the time to completion.
 
 
 {marker options}{...}
@@ -116,6 +116,9 @@ While {cmd:progressbar} will add slightly to runtime, it is helpful to be able t
 {title:Examples}
 
 {pstd}
+Before each loop (or set of nested loops), {cmd:. progressbar} must be called  with the option init, along with the specifications of the loops to be carried out. 
+
+{pstd}
 Initialise a simple loop from 1 to 10
 
 {phang}{cmd:. progressbar , init type(v) start(1) end(10) step(1)}{p_end}
@@ -133,6 +136,9 @@ Initialise a complicated loop involving two forvalues and two foreach loops of d
 {p 4 6 2}
 
 {pstd}
+During a loop (or set of nested loops), {cmd:. progressbar} should be called each time the progress bar should be displayed.  {cmd:. progressbar} should be called once at the nested loops deepest point (i.e. inside all the loops).
+
+{pstd}
 Display a progress bar during a loop
 
 {phang}{cmd:. progressbar , }{p_end}
@@ -145,7 +151,7 @@ Display a progress bar during a loop with a timer
 {pstd}
 Display a progress bar that is 100 characters wide
 
-{phang}{cmd:. progressbar , wide(100)}{p_end}
+{phang}{cmd:. progressbar , width(100)}{p_end}
 
 {p 4 6 2}
 
@@ -154,10 +160,25 @@ A full example of using progressbar with a forvalues loop.
 
 {phang}{cmd:. progressbar , init type(v) start(1) end(100) time}{p_end}
 
-	{cmd:. forvalues i = 1(1)100 {c -(}}
-	   {cmd:. progressbar , time}
-	  {cmd:2. generate x`i' = runiform()}
-   {cmd:3. {c )-}}
+{phang}{cmd:. forvalues i = 1(1)100 {c -(}}{p_end}
+{phang}{cmd:. 	progressbar , time}{p_end}
+{phang}{cmd:. 	generate x`i' = runiform()}{p_end}
+{phang}{cmd:. {c )-}}{p_end}
+
+
+{pstd}
+A full example of using progressbar with nested loops.
+
+{phang}{cmd:. local alist = "alpha beta gamma"}{p_end}
+
+{phang}{cmd:. progressbar , init type(v e) start(1) end(100) list1(`alist') time}{p_end}
+
+{phang}{cmd:. forvalues i = 1(1)100 {c -(}}{p_end}
+{phang}{cmd:. 		foreach jj in `alist' {c -(}}{p_end}
+{phang}{cmd:. 			progressbar , time}{p_end}
+{phang}{cmd:. 			generate x`i'`jj' = runiform()}{p_end}
+{phang}{cmd:. 		{c )-}}{p_end}
+{phang}{cmd:. {c )-}}{p_end}
 
 
 
