@@ -9,7 +9,7 @@
 //  Step is optional (default 1)
 //  loud prevents the command from clearing the screen
 
-// v0.4
+// v0.5
 
 // Usage
 // Prior to a set of nested loops, -progressbar- must be called with all options specified.
@@ -96,8 +96,6 @@ syntax , [init] [start(string)] [end(string)] [step(string)] [type(string)] [lis
 	
 		local nestnum = wordcount("`type'",1)
 
-		di "`nestnum'"
-	
 		local l = 0
 	
 		forvalues ii = 1(1)`nestnum' {
@@ -156,6 +154,7 @@ syntax , [init] [start(string)] [end(string)] [step(string)] [type(string)] [lis
 
 		if "`time'"=="time" {
 			global progressbarstarttime = clock("$S_TIME", "hms")
+			global progressbarstartdate = date("$S_DATE", "DMY")
 		}
 		
 		if "`debug'"=="debug" {
@@ -233,8 +232,7 @@ syntax , [init] [start(string)] [end(string)] [step(string)] [type(string)] [lis
 			
 				// global progressbarnowtime = clock("$S_TIME", "hms")
 			if "`time'"=="time" {
-				local elapsedtime = (clock("$S_TIME", "hms") - $progressbarstarttime)/60000
-				// local remainingtime = round((`elapsedtime'/`percent') - `elapsedtime',.01)
+				local elapsedtime = ((date("$S_DATE", "DMY") - $progressbarstartdate )*1440) +  (clock("$S_TIME", "hms") - $progressbarstarttime )/60000
 				local remainingtime = (`elapsedtime'/`percent') - `elapsedtime'
 	
 
